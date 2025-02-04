@@ -12,6 +12,9 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('persona_usuario_view.index') }}">Inicio</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('persona_usuario_view.registro') }}">Registro</a>
                 </li>
             </ul>
@@ -28,9 +31,9 @@
                     <th>Apellido Materno</th>
                     <th>DNI</th>
                     <th>Teléfono</th>
-                    <th>Sexo</th>
-                    <th>Fecha de Nacimiento</th>
                     <th>Correo Electrónico</th>
+                    <th>Estado</th>
+                    <th>Rol</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -43,12 +46,14 @@
                     <td>{{ persona.apellido_materno }}</td>
                     <td>{{ persona.dni }}</td>
                     <td>{{ persona.telefono }}</td>
-                    <td>{{ persona.sexo.name }}</td>
-                    <td>{{ persona.fecha_nacimiento }}</td>
                     <td>{{ persona.correo }}</td>
+                    <td>{{ 'Activo' if persona.estado else 'Inactivo' }}</td>
+                    <td>{{ persona.usuarios[0].rol }}</td>
                     <td>
                         <a href="#" class="btn btn-primary btn-sm">Editar</a>
-                        <a href="#" class="btn btn-danger btn-sm">Eliminar</a>
+                        <form action="{{ url_for('persona_usuario_view.eliminar_persona', id_persona=persona.id_persona) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
                     </td>
                 </tr>
                 {% endfor %}

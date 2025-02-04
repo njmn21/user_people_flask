@@ -7,7 +7,7 @@ persona_usuario_view = Blueprint('persona_usuario_view', __name__)
 
 @persona_usuario_view.route('/', methods=['GET'])
 def index():
-    personas = Persona.query.all()
+    personas = db.session.query(Persona).join(Usuario).all()
     return render_template('index.html', personas=personas)
 
 @persona_usuario_view.route('/registro')
@@ -58,32 +58,19 @@ def registro_persona():
     except Exception as e:
         return str(e)
 
-@persona_usuario_view.route('/editar_persona/<int:id>', methods=['GET', 'POST'])
-def editar_persona(id):
-    persona = Persona.query.get_or_404(id)
-    if request.method == 'POST':
-        try:
-            persona.nombre = request.form['nombre']
-            persona.apellido_paterno = request.form['apellido_paterno']
-            persona.apellido_materno = request.form['apellido_materno']
-            persona.dni = request.form['dni']
-            persona.telefono = request.form['telefono']
-            persona.sexo = Sexo[request.form['sexo'].upper()]
-            persona.fecha_nacimiento = request.form['fecha_nacimiento']
-            persona.correo = request.form['correo']
-            persona.contrasenia = request.form['contrasenia']
-            db.session.commit()
-            return redirect(url_for('persona_usuario_view.index'))
-        except Exception as e:
-            return str(e)
-    return render_template('editar_persona.html', persona=persona)
-
-@persona_usuario_view.route('/eliminar_persona/<int:id>', methods=['POST'])
-def eliminar_persona(id):
+@persona_usuario_view.route('/eliminar_persona/<int:id_persona>', methods=['POST'])
+def eliminar_persona(id_persona):
     try:
-        persona = Persona.query.get_or_404(id)
-        db.session.delete(persona)
-        db.session.commit()
+        persona = db.session.query(Persona).filter_by(id_persona=id_persona).first()
+        if persona:
+            # Eliminar usuarios asociados antes de eliminar la persona
+            db.session.query(Usuario).filter_by(id_persona=id_persona).delete()
+
+            # Ahora eliminar la persona
+            db.session.delete(persona)
+            db.session.commit()
+            
         return redirect(url_for('persona_usuario_view.index'))
     except Exception as e:
+        db.session.rollback()  # En caso de error, hacer rollback
         return str(e)
