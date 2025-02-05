@@ -50,7 +50,7 @@
                     <td>{{ 'Activo' if persona.estado else 'Inactivo' }}</td>
                     <td>{{ persona.usuarios[0].rol }}</td>
                     <td>
-                        <a href="#" class="btn btn-primary btn-sm">Editar</a>
+                        <a href="{{ url_for('persona_usuario_view.registro', id_persona=persona.id_persona) }}" class="btn btn-primary btn-sm">Editar</a>
                         <form action="{{ url_for('persona_usuario_view.eliminar_persona', id_persona=persona.id_persona) }}" method="POST" style="display:inline;">
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                         </form>

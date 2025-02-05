@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Persona</title>
+    <title>{{ 'Editar Persona' if persona else 'Registro de Persona' }}</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -23,60 +23,54 @@
         </div>
     </nav>
     <div class="container mt-5">
-        <h2 class="text-center">Registro de Persona</h2>
-        <form action="registro_persona" method="POST">
+        <h2 class="text-center">{{ 'Editar Persona' if persona else 'Registro de Persona' }}</h2>
+        <form action="{{ url_for('persona_usuario_view.registro_persona') }}" method="POST">
+            <input type="hidden" id="id_persona" name="id_persona" value="{{ persona.id_persona if persona else '' }}">
             <div class="form-group">
                 <label for="nombre">Nombre:</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese su nombre"
-                    required>
+                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese su nombre" value="{{ persona.nombre if persona else '' }}" required>
             </div>
             <div class="form-group">
                 <label for="apellido_paterno">Apellido Paterno:</label>
-                <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno"
-                    placeholder="Ingrese su apellido paterno" required>
+                <input type="text" class="form-control" id="apellido_paterno" name="apellido_paterno" placeholder="Ingrese su apellido paterno" value="{{ persona.apellido_paterno if persona else '' }}" required>
             </div>
             <div class="form-group">
                 <label for="apellido_materno">Apellido Materno:</label>
-                <input type="text" class="form-control" id="apellido_materno" name="apellido_materno"
-                    placeholder="Ingrese su apellido materno" required>
+                <input type="text" class="form-control" id="apellido_materno" name="apellido_materno" placeholder="Ingrese su apellido materno" value="{{ persona.apellido_materno if persona else '' }}" required>
             </div>
             <div class="form-group">
                 <label for="dni">DNI:</label>
-                <input type="text" class="form-control" id="dni" name="dni" placeholder="Ingrese su DNI" pattern="\d{8}"
-                    title="Debe tener 8 dígitos" required>
+                <input type="text" class="form-control" id="dni" name="dni" placeholder="Ingrese su DNI" pattern="\d{8}" title="Debe tener 8 dígitos" value="{{ persona.dni if persona else '' }}" required>
             </div>
             <div class="form-group">
                 <label for="telefono">Teléfono:</label>
-                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ingrese su teléfono"
-                    pattern="\d{9}" title="Debe tener 9 dígitos" required>
+                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ingrese su teléfono" pattern="\d{9}" title="Debe tener 9 dígitos" value="{{ persona.telefono if persona else '' }}" required>
             </div>
             <div class="form-group">
                 <label for="sexo">Sexo:</label>
                 <select class="form-control" name="sexo" id="sexo" required>
                     <option value="">Seleccione</option>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Femenino">Femenino</option>
+                    <option value="Masculino" {{ 'selected' if persona and persona.sexo == 'Masculino' else '' }}>Masculino</option>
+                    <option value="Femenino" {{ 'selected' if persona and persona.sexo == 'Femenino' else '' }}>Femenino</option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
-                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" value="{{ persona.fecha_nacimiento if persona else '' }}" required>
             </div>
             <div class="form-group">
                 <label for="correo">Correo Electrónico:</label>
-                <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese su correo"
-                    required>
+                <input type="email" class="form-control" id="correo" name="correo" placeholder="Ingrese su correo" value="{{ persona.correo if persona else '' }}" required>
             </div>
             <div class="form-group">
                 <label for="contrasenia">Contraseña:</label>
-                <input class="form-control" id="contrasenia" name="contrasenia" placeholder="Ingrese su contraseña"
-                    required>
+                <input class="form-control" id="contrasenia" name="contrasenia" placeholder="Ingrese su contraseña" value="{{ persona.contrasenia if persona else '' }}" required>
             </div>
             <div class="form-group">
                 <label for="rol">Rol:</label>
-                <input type="text" class="form-control" id="rol" name="rol" placeholder="Ingrese su rol" required>
+                <input type="text" class="form-control" id="rol" name="rol" placeholder="Ingrese su rol" value="{{ persona.usuarios[0].rol if persona else '' }}" required>
             </div>
-            <button type="submit" class="btn btn-success btn-block">Registrar</button>
+            <button type="submit" class="btn btn-success btn-block">{{ 'Actualizar' if persona else 'Registrar' }}</button>
         </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
