@@ -19,6 +19,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('persona_usuario_view.registro') }}">Registro</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('persona_usuario_view.registro_cliente') }}">Registro Cliente</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -50,8 +53,8 @@
                 <label for="sexo">Sexo:</label>
                 <select class="form-control" name="sexo" id="sexo" required>
                     <option value="">Seleccione</option>
-                    <option value="Masculino" {{ 'selected' if persona and persona.sexo == 'Masculino' else '' }}>Masculino</option>
-                    <option value="Femenino" {{ 'selected' if persona and persona.sexo == 'Femenino' else '' }}>Femenino</option>
+                    <option value="Masculino" {{ 'selected' if persona and persona.sexo.name == 'MASCULINO' else '' }}>Masculino</option>
+                    <option value="Femenino" {{ 'selected' if persona and persona.sexo.name == 'FEMENINO' else '' }}>Femenino</option>
                 </select>
             </div>
             <div class="form-group">
@@ -68,7 +71,7 @@
             </div>
             <div class="form-group">
                 <label for="rol">Rol:</label>
-                <input type="text" class="form-control" id="rol" name="rol" placeholder="Ingrese su rol" value="{{ persona.usuarios[0].rol if persona else '' }}" required>
+                <input type="text" class="form-control" id="rol" name="rol" placeholder="Ingrese su rol" value="{{ persona.usuarios[0].rol if persona else 'Administrador' }}" required>
             </div>
             <button type="submit" class="btn btn-success btn-block">{{ 'Actualizar' if persona else 'Registrar' }}</button>
         </form>

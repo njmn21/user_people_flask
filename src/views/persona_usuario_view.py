@@ -79,6 +79,54 @@ def registro_persona():
         db.session.rollback()
         return str(e)
 
+#vista de registro de cliente
+@persona_usuario_view.route('/registro_cliente', methods=['GET'])
+def registro_cliente():
+    return render_template('registro_cliente.html')
+
+#accion de registro de cliente
+@persona_usuario_view.route('/registro_persona_cliente', methods=['POST'])
+def registro_persona_cliente():
+    try:
+        nombre = request.form['nombre']
+        apellido_paterno = request.form['apellido_paterno']
+        apellido_materno = request.form['apellido_materno']
+        dni = request.form['dni']
+        telefono = request.form['telefono']
+        sexo = request.form['sexo']
+        fecha_nacimiento = request.form['fecha_nacimiento']
+        correo = request.form['correo']
+        contrasenia = request.form['contrasenia']
+
+        sexo_enum = Sexo[sexo.upper()]
+
+        nueva_persona = Persona(
+            nombre=nombre,
+            apellido_paterno=apellido_paterno,
+            apellido_materno=apellido_materno,
+            dni=dni,
+            telefono=telefono,
+            sexo=sexo_enum,
+            fecha_nacimiento=fecha_nacimiento,
+            correo=correo,
+            contrasenia=contrasenia
+        )
+        db.session.add(nueva_persona)
+        db.session.flush()
+
+        nuevo_usuario = Usuario(
+            id_persona=nueva_persona.id_persona,
+            rol='Cliente'
+        )
+        db.session.add(nuevo_usuario)
+
+        db.session.commit()
+        return redirect(url_for('persona_usuario_view.index'))
+
+    except Exception as e:
+        db.session.rollback()
+        return str(e)
+
 #accion de eliminar
 @persona_usuario_view.route('/eliminar_persona/<int:id_persona>', methods=['POST'])
 def eliminar_persona(id_persona):
