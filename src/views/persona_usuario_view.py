@@ -36,8 +36,6 @@ def registro_persona():
         contrasenia = request.form['contrasenia']
         rol = request.form['rol']
 
-        sexo_enum = Sexo[sexo.upper()]
-
         if id_persona:
             persona = db.session.query(Persona).filter_by(id_persona=id_persona).first()
             if persona:
@@ -46,7 +44,7 @@ def registro_persona():
                 persona.apellido_materno = apellido_materno
                 persona.dni = dni
                 persona.telefono = telefono
-                persona.sexo = sexo_enum
+                persona.sexo = sexo
                 persona.fecha_nacimiento = fecha_nacimiento
                 persona.correo = correo
                 persona.contrasenia = contrasenia
@@ -58,7 +56,7 @@ def registro_persona():
                 apellido_materno=apellido_materno,
                 dni=dni,
                 telefono=telefono,
-                sexo=sexo_enum,
+                sexo=sexo,
                 fecha_nacimiento=fecha_nacimiento,
                 correo=correo,
                 contrasenia=contrasenia
@@ -142,5 +140,3 @@ def eliminar_persona(id_persona):
     except Exception as e:
         db.session.rollback()
         return str(e)
-
-
