@@ -96,15 +96,13 @@ def registro_persona_cliente():
         correo = request.form['correo']
         contrasenia = request.form['contrasenia']
 
-        sexo_enum = Sexo[sexo.upper()]
-
         nueva_persona = Persona(
             nombre=nombre,
             apellido_paterno=apellido_paterno,
             apellido_materno=apellido_materno,
             dni=dni,
             telefono=telefono,
-            sexo=sexo_enum,
+            sexo=sexo,
             fecha_nacimiento=fecha_nacimiento,
             correo=correo,
             contrasenia=contrasenia
