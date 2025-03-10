@@ -2,8 +2,8 @@ from enum import Enum
 from src import db
 
 class Sexo(Enum):
-    MASCULINO = 'Masculino'
-    FEMENINO = 'Femenino'
+    masculino = 'masculino'
+    femenino = 'femenino'
 
 class Persona(db.Model):
     __tablename__ = 'personas'

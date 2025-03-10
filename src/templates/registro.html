@@ -53,8 +53,8 @@
                 <label for="sexo">Sexo:</label>
                 <select class="form-control" name="sexo" id="sexo" required>
                     <option value="">Seleccione</option>
-                    <option value="Masculino" {{ 'selected' if persona and persona.sexo.name == 'MASCULINO' else '' }}>Masculino</option>
-                    <option value="Femenino" {{ 'selected' if persona and persona.sexo.name == 'FEMENINO' else '' }}>Femenino</option>
+                    <option value="masculino" {{ 'selected' if persona and persona.sexo.name == 'masculino' else '' }}>Masculino</option>
+                    <option value="femenino" {{ 'selected' if persona and persona.sexo.name == 'femenino' else '' }}>Femenino</option>
                 </select>
             </div>
             <div class="form-group">

@@ -8,7 +8,7 @@ class Config:
 
     # Database
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://root:{os.getenv('DATABASE_PASSWORD')}@localhost:3306/discoteca2'
+    SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://root:{os.getenv('DATABASE_PASSWORD')}@localhost:3306/discoteca'
 
 class DevelopmentConfig(Config):
     DEBUG = True
